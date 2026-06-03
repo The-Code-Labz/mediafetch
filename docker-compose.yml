@@ -6,12 +6,11 @@ services:
       - "${PORT}:${PORT}"
     volumes:
       - ./downloads:/data/downloads
+      - ./cookies.txt:/app/cookies.txt:ro
     environment:
       - PORT=${PORT}
-      - BASIC_AUTH_USER=${BASIC_AUTH_USER}
-      - BASIC_AUTH_PASS=${BASIC_AUTH_PASS}
-      - PUBLIC_BASE_URL=${PUBLIC_BASE_URL}
-      - MAX_CONCURRENT_JOBS=${MAX_CONCURRENT_JOBS:-2}
-      - JOB_TIMEOUT_MS=${JOB_TIMEOUT_MS:-600000}
-      - VERSION_CHECK_TTL_MS=${VERSION_CHECK_TTL_MS:-21600000}
-      - OUTPUT_DIR=/data/downloads
+      - AUTH_USER=${AUTH_USER}
+      - AUTH_PASS=${AUTH_PASS}
+      - YTDLP_EXTRA_ARGS=--cookies /app/cookies.txt
+    env_file:
+      - .env
